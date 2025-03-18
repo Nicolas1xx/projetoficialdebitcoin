@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <title>Preço das Criptomoedas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #141414;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-top: 80px; /* Ajuste de acordo com a altura do seu header fixo */
+        }
+
+        /* Fixar o header no topo */
+        header {
+            position: fixed; /* Torna o header fixo no topo */
+            top: 0;
+            left: 0;
+            width: 100%; /* Garante que o header ocupe toda a largura da página */
+            background-color: #141414; /* Cor de fundo para o cabeçalho */
+            padding: 20px 0; /* Ajusta o espaçamento dentro do header */
+            z-index: 10; /* Garante que o header ficará acima dos outros elementos */
+            color: #f0b90b; /* Cor do texto */
+            text-align: center; /* Centraliza o título */
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Ajusta o estilo do título dentro do header */
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 40px; /* Adiciona espaçamento entre o topo da página e o título */
+            margin-bottom: 20px; /* Espaçamento entre o título e o restante do conteúdo */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        input, select, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px 0;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background-color: #1c1c1c;
+            color: white;
+            transition: 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #f0b90b;
+            outline: none;
+        }
+        button {
+            background-color: #f0b90b;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #f0a300;
+        }
+        #grafico-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #1c1c1c;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(240, 185, 11, 0.2);
+        }
+        #grafico {
+            max-width: 100%;
+            height: 350px;
+        }
+        #resultado {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            line-height: 1.6;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        CRIPTO NICOLAS LTDA
+    </header>
+
+    <div class="container">
+        <h1>Informe seus dados</h1>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome">
+        <label for="moeda">Escolha a criptomoeda:</label>
+        <select id="moeda" onchange="obterPreco()">
+            <option value="bitcoin">Bitcoin</option>
+            <option value="ethereum">Ethereum</option>
+            <option value="dogecoin">Dogecoin</option>
+            <option value="litecoin">Litecoin</option>
+            <option value="cardano">Cardano</option>
+            <option value="solana">Solana</option>
+            <option value="xrp">XRP</option>
+            <option value="polkadot">Polkadot</option>
+        </select>
+        <button onclick="obterPreco()">Obter Preço</button>
+        <div id="resultado"></div>
+
+        <div id="grafico-container">
+            <canvas id="grafico"></canvas>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 CRIPTO NICOLAS LTDA - Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        let grafico;
+
+        function obterPreco() {
+            const nome = document.getElementById('nome').value;
+            const moeda = document.getElementById('moeda').value;
+
+            fetch('/precos')
+                .then(response => response.json())
+                .then(data => {
+                    const preco = data[moeda];
+
+                    let tendencia = "";
+                    let recomendacao = "";
+
+                    if (moeda === "bitcoin") {
+                        if (preco > 460000) {
+                            tendencia = "O Bitcoin está em uma leve queda nas últimas 24h.";
+                            recomendacao = "Pode ser um bom momento para comprar, caso a tendência de alta retorne.";
+                        } else {
+                            tendencia = "O Bitcoin está estável, com leve tendência de recuperação.";
+                            recomendacao = "Se você já possui Bitcoin, pode valer a pena manter sua posição.";
+                        }
+                    } else if (moeda === "ethereum") {
+                        if (preco > 3500) {
+                            tendencia = "O Ethereum teve uma alta recente, mas pode corrigir em breve.";
+                            recomendacao = "Se deseja comprar, aguarde um pouco para possíveis quedas.";
+                        } else {
+                            tendencia = "O Ethereum está em um momento de consolidação.";
+                            recomendacao = "Uma boa opção para médio prazo.";
+                        }
+                    } else if (moeda === "dogecoin") {
+                        if (preco > 0.07) {
+                            tendencia = "O Dogecoin teve uma alta recente, mas pode corrigir em breve.";
+                            recomendacao = "Se deseja comprar, aguarde um pouco para possíveis quedas.";
+                        } else {
+                            tendencia = "O Dogecoin está em um momento de consolidação.";
+                            recomendacao = "Uma boa opção para médio prazo.";
+                        }
+                    }
+
+                    document.getElementById('resultado').innerHTML = `
+                        <div>
+                            <strong>Nome:</strong> ${nome}
+                        </div>
+                        <div>
+                            <strong>Criptomoeda:</strong> ${moeda.charAt(0).toUpperCase() + moeda.slice(1)}
+                        </div>
+                        <div>
+                            <strong>Preço Atual:</strong> $${preco.toLocaleString('pt-BR', {minimumFractionDigits: 2})}
+                        </div>
+                        <div>
+                            <strong>Tendência:</strong> ${tendencia}
+                        </div>
+                        <div>
+                            <strong>Recomendação:</strong> ${recomendacao}
+                        </div>
+                    `;
+
+                    atualizarGrafico(moeda, preco);
+                })
+                .catch(error => {
+                    console.error('Erro ao obter os preços:', error);
+                    document.getElementById('resultado').innerHTML = 'Erro ao obter os preços. Tente novamente mais tarde.';
+                });
+        }
+
+        function atualizarGrafico(moeda, preco) {
+            document.getElementById('grafico-container').style.display = 'block';
+            const ctx = document.getElementById('grafico').getContext('2d');
+
+            if (grafico) {
+                grafico.destroy();
+            }
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(240, 185, 11, 0.6)');
+            gradient.addColorStop(1, 'rgba(240, 185, 11, 0)');
+
+            grafico = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Últimas 24h', 'Última semana', 'Último mês'],
+                    datasets: [{
+                        label: moeda,
+                        data: [preco, preco * 0.95, preco * 1.05], 
+                        borderColor: '#f0b90b',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointRadius: 6,
+                        pointBackgroundColor: '#f0b90b',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+/* Importando fontes */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Reset global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: #121212;
+    color: #eaecef;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 0;
+    margin-bottom: 50px; /* Para garantir que o rodapé não se sobreponha ao conteúdo */
+}
+
+/* Cabeçalho */
+header {
+    text-align: center;
+    padding: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #f0b90b;
+    margin: 0;  /* Garantir que o título esteja colado ao topo */
+    position: fixed; /* Fixando o cabeçalho no topo */
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Garantir que o cabeçalho fique acima do restante do conteúdo */
+}
+
+/* Container principal */
+.container {
+    width: 80%;
+    max-width: 1000px; /* Tamanho aumentado para melhorar a visibilidade */
+    padding: 30px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 80px; /* Dá espaço para o cabeçalho fixo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1; /* Garantir que o container ocupe o restante do espaço */
+}
+
+/* Caixa de conteúdo */
+.box-content {
+    width: 100%;
+    max-width: 800px;  /* Ajuste o tamanho para a estética */
+    padding: 40px;
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px; /* Diminui o espaço entre o título e o conteúdo */
+    color: #f0b90b;  /* Destaque no título */
+}
+
+label {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #f0b90b;
+    display: block;
+    text-align: left;
+    width: 100%;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #444;
+    color: #eaecef;
+    font-size: 16px;
+}
+
+input:focus, select:focus, button:focus {
+    outline: none;
+    border-color: #f0b90b;
+}
+
+/* Botão */
+button {
+    background-color: #f0b90b;
+    color: #121212;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e09a05;
+}
+
+/* Resultado */
+#resultado {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #f0b90b;
+    text-align: center;
+}
+
+/* Rodapé */
+footer {
+    background-color: #121212;
+    color: #848e9c;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    position: fixed; /* Fixa o rodapé na parte inferior */
+    bottom: 0; /* Garante que fique na parte de baixo da página */
+    left: 0; /* Alinha com a borda esquerda */
+    z-index: 999; /* Coloca o rodapé abaixo do cabeçalho */
+}
+
+footer p {
+    font-size: 14px;
+    margin: 0;
+}
+
+footer a {
+    color: #f0b90b;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    header {
+        font-size: 1.5rem;
+        padding: 10px 15px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .price-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .box-content {
+        padding: 15px;
+    }
+}
+
+/* Responsividade para telas muito pequenas (smartphones) */
+@media (max-width: 480px) {
+    header {
+        font-size: 1rem;
+    }
+
+    .price-section h1 {
+        font-size: 1.25rem;
+    }
+
+    .box-content {
+        padding: 10px;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
+}
